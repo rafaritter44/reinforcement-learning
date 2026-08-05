@@ -120,3 +120,21 @@
           (if (= :o (winner o-board)) 
             {:values values-after-x, :outcome :o-wins} ; O won.
             (recur o-board values-after-x)))))))
+
+;; Training for many games
+
+(defn train [games options]
+  (loop [remaining games
+         values    {}
+         results   {:x-wins 0
+                    :o-wins 0
+                    :draw   0}]
+    (if (zero? remaining)
+      {:values  values
+       :results results}
+      (let [{new-values :values
+             outcome    :outcome}
+            (play-game values options)]
+        (recur (dec remaining)
+               new-values
+               (update results outcome inc))))))
