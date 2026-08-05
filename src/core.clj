@@ -79,3 +79,13 @@
                          greedy-board)]
     {:board        selected-board
      :exploratory? explore?}))
+
+;; Temporal Difference (TD) update
+
+(defn td-update [values state next-state alpha]
+  (let [old-value  (value-of values state)
+        next-value (value-of values next-state)
+        new-value  (+ old-value
+                      (* alpha
+                         (- next-value old-value)))]
+    (assoc values state new-value)))
