@@ -117,7 +117,7 @@
         :else
         ;; O's turn
         (let [o-board (random-opponent x-board)]
-          (if (= :o (winner o-board)) 
+          (if (= :o (winner o-board))
             {:values values-after-x, :outcome :o-wins} ; O won.
             (recur o-board values-after-x)))))))
 
@@ -138,3 +138,9 @@
         (recur (dec remaining)
                new-values
                (update results outcome inc))))))
+
+(comment
+  (def model
+    (train 100000 {:alpha 0.1, :epsilon 0.1}))
+  model
+  )
