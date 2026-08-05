@@ -94,3 +94,29 @@
 
 (defn random-opponent [board]
   (rand-elem (successors board :o)))
+
+;; Playing one game
+
+(defn play-game [values {:keys [alpha epsilon]}]
+  (loop [board  empty-board
+         values values]
+    ;; X's turn
+    (let [{x-board :board, exploratory? :exploratory?} (choose-move values board epsilon)
+
+          ;; Learn only if this was a greedy move.
+          values-after-x (if exploratory? values (td-update values board x-board alpha))]
+      (cond
+        ;; X won.
+        (= :x (winner x-board))
+        {:values values-after-x, :outcome :x-wins}
+
+        ;; Board filled after X's move.
+        (full? x-board)
+        {:values values-after-x, :outcome :draw}
+
+        :else
+        ;; O's turn
+        (let [o-board (random-opponent x-board)]
+          (if (= :o (winner o-board)) 
+            {:values values-after-x, :outcome :o-wins} ; O won.
+            (recur o-board values-after-x)))))))
