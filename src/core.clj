@@ -1,5 +1,7 @@
 (ns core)
 
+;; Representing the board
+
 (def empty-board
   (vec (repeat 9 nil)))
 
@@ -44,3 +46,14 @@
   (mapv
    #(make-move board % player)
    (empty-squares board)))
+
+;; The value function
+
+(defn initial-value [board]
+  (cond
+    (= :x (winner board)) 1.0
+    (terminal? board) 0.0
+    :else 0.5))
+
+(defn value-of [values board]
+  (get values board (initial-value board)))
