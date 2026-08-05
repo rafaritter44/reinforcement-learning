@@ -89,3 +89,8 @@
                       (* alpha
                          (- next-value old-value)))]
     (assoc values state new-value)))
+
+;; An imperfect opponent
+
+(defn random-opponent [board]
+  (rand-elem (successors board :o)))
