@@ -16,14 +16,13 @@
    [2 4 6]])
 
 (defn winner [board]
-  (some
-   (fn [[a b c]]
-     (let [mark (board a)]
-       (when (and mark
-                  (= mark (board b))
-                  (= mark (board c)))
-         mark)))
-   winning-lines))
+  (some (fn [[a b c]]
+          (let [mark (board a)]
+            (when (and mark
+                       (= mark (board b))
+                       (= mark (board c)))
+              mark)))
+        winning-lines))
 
 (defn full? [board]
   (every? some? board))
@@ -33,19 +32,17 @@
       (full? board)))
 
 (defn empty-squares [board]
-  (keep-indexed
-   (fn [index square]
-     (when (nil? square)
-       index))
-   board))
+  (keep-indexed (fn [index square]
+                  (when (nil? square)
+                    index))
+                board))
 
 (defn make-move [board square player]
   (assoc board square player))
 
 (defn successors [board player]
-  (mapv
-   #(make-move board % player)
-   (empty-squares board)))
+  (mapv #(make-move board % player)
+        (empty-squares board)))
 
 ;; The value function
 
@@ -57,3 +54,28 @@
 
 (defn value-of [values board]
   (get values board (initial-value board)))
+
+;; Choosing a move
+
+(defn greedy-successors [values boards]
+  (let [max-value (apply max (map #(value-of values %) boards))]
+    (filterv #(= max-value
+                 (value-of values %))
+             boards)))
+
+(defn rand-elem [xs]
+  (nth xs (rand-int (count xs))))
+
+(defn choose-move [values board epsilon]
+  (let [next-boards    (successors board :x)
+        greedy-boards  (greedy-successors values next-boards)
+        greedy-board   (rand-elem greedy-boards)
+        other-boards   (vec (remove (set greedy-boards)
+                                    next-boards))
+        explore?       (and (seq other-boards)
+                            (< (rand) epsilon))
+        selected-board (if explore?
+                         (rand-elem other-boards)
+                         greedy-board)]
+    {:board        selected-board
+     :exploratory? explore?}))
