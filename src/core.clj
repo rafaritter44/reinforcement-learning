@@ -67,8 +67,7 @@
   (let [next-boards    (successors board :x)
         greedy-boards  (greedy-successors values next-boards)
         greedy-board   (rand-nth greedy-boards)
-        other-boards   (vec (remove (set greedy-boards)
-                                    next-boards))
+        other-boards   (vec (remove (set greedy-boards) next-boards))
         explore?       (and (seq other-boards)
                             (< (rand) epsilon))
         selected-board (if explore?
