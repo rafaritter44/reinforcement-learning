@@ -142,6 +142,7 @@
 
 (comment
   (def model
-    (train 100000 {:alpha 0.1, :epsilon 0.1}))
+    (train 100000 {:alpha   0.1    ; Learning rate
+                   :epsilon 0.1})) ; Exploration rate
   model
   )
