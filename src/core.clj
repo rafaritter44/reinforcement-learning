@@ -27,10 +27,6 @@
 (defn full? [board]
   (every? some? board))
 
-(defn terminal? [board]
-  (or (winner board)
-      (full? board)))
-
 (defn empty-squares [board]
   (keep-indexed
    (fn [index square]
@@ -48,10 +44,12 @@
 ;; The value function
 
 (defn initial-value [board]
-  (cond
-    (= :x (winner board)) 1.0
-    (terminal? board)     0.0
-    :else                 0.5))
+  (let [w (winner board)]
+    (cond
+      (= w :x)      1.0
+      w             0.0
+      (full? board) 0.0
+      :else         0.5)))
 
 (defn value-of [values board]
   (or (values board)
