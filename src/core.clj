@@ -63,19 +63,16 @@
                  (value-of values %))
              boards)))
 
-(defn rand-elem [xs]
-  (nth xs (rand-int (count xs))))
-
 (defn choose-move [values board epsilon]
   (let [next-boards    (successors board :x)
         greedy-boards  (greedy-successors values next-boards)
-        greedy-board   (rand-elem greedy-boards)
+        greedy-board   (rand-nth greedy-boards)
         other-boards   (vec (remove (set greedy-boards)
                                     next-boards))
         explore?       (and (seq other-boards)
                             (< (rand) epsilon))
         selected-board (if explore?
-                         (rand-elem other-boards)
+                         (rand-nth other-boards)
                          greedy-board)]
     {:board        selected-board
      :exploratory? explore?}))
@@ -93,7 +90,7 @@
 ;; An imperfect opponent
 
 (defn random-opponent [board]
-  (rand-elem (successors board :o)))
+  (rand-nth (successors board :o)))
 
 ;; Playing one game
 
