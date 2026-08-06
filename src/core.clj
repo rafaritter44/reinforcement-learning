@@ -53,7 +53,8 @@
     :else                 0.5))
 
 (defn value-of [values board]
-  (get values board (initial-value board)))
+  (or (values board)
+      (initial-value board)))
 
 ;; Choosing a move
 
