@@ -49,8 +49,8 @@
 (defn initial-value [board]
   (cond
     (= :x (winner board)) 1.0
-    (terminal? board) 0.0
-    :else 0.5))
+    (terminal? board)     0.0
+    :else                 0.5))
 
 (defn value-of [values board]
   (get values board (initial-value board)))
