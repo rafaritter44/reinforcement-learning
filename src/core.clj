@@ -116,10 +116,11 @@
 
         :else
         ;; O's turn
-        (let [o-board (random-opponent x-board)]
+        (let [o-board        (random-opponent x-board)
+              values-after-o (td-update values-after-x x-board o-board alpha)]
           (if (= :o (winner o-board))
-            {:values values-after-x, :outcome :o-wins} ; O won.
-            (recur o-board values-after-x)))))))
+            {:values values-after-o, :outcome :o-wins} ; O won.
+            (recur o-board values-after-o)))))))
 
 ;; Training for many games
 
