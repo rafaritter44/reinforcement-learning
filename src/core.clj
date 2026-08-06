@@ -32,10 +32,11 @@
       (full? board)))
 
 (defn empty-squares [board]
-  (keep-indexed (fn [index square]
-                  (when (nil? square)
-                    index))
-                board))
+  (keep-indexed
+   (fn [index square]
+     (when (nil? square)
+       index))
+   board))
 
 (defn make-move [board square player]
   (assoc board square player))
