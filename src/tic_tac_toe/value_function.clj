@@ -1,7 +1,7 @@
 (ns tic-tac-toe.value-function
   (:require [tic-tac-toe.board :as board]))
 
-(defn initial-value [board]
+(defn- initial-value [board]
   (let [w (board/winner board)]
     (cond
       (= w :x)      1.0

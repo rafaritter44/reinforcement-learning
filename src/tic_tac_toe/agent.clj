@@ -2,7 +2,7 @@
   (:require [tic-tac-toe.board          :as board]
             [tic-tac-toe.value-function :as value-function]))
 
-(defn greedy-successors [values boards]
+(defn- greedy-successors [values boards]
   (let [max-value (apply max (map #(value-function/value-of values %) boards))]
     (filterv #(= max-value
                  (value-function/value-of values %))

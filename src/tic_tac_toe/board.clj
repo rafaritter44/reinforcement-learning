@@ -3,7 +3,7 @@
 (def empty-board
   (vec (repeat 9 nil)))
 
-(def winning-lines
+(def ^:private winning-lines
   [[0 1 2]
    [3 4 5]
    [6 7 8]
@@ -25,14 +25,14 @@
 (defn full? [board]
   (every? some? board))
 
-(defn empty-squares [board]
+(defn- empty-squares [board]
   (keep-indexed
    (fn [index square]
      (when (nil? square)
        index))
    board))
 
-(defn make-move [board square player]
+(defn- make-move [board square player]
   (assoc board square player))
 
 (defn successors [board player]
