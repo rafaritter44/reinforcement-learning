@@ -4,10 +4,10 @@
 (defn- initial-value [board]
   (let [w (board/winner board)]
     (cond
-      (= w :x)      1.0
-      w             0.0
+      (= w :x)            1.0
+      w                   0.0
       (board/full? board) 0.0
-      :else         0.5)))
+      :else               0.5)))
 
 (defn value-of [values board]
   (or (values board)
