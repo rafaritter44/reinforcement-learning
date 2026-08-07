@@ -5,7 +5,7 @@
   (let [w (board/winner board)]
     (cond
       (= w :x)            1.0
-      w                   0.0
+      (= w :o)            0.0
       (board/full? board) 0.0
       :else               0.5)))
 
