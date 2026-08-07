@@ -11,12 +11,9 @@
 (defn choose-move [values board epsilon]
   (let [next-boards    (board/successors board :x)
         greedy-boards  (greedy-successors values next-boards)
-        greedy-board   (rand-nth greedy-boards)
         other-boards   (vec (remove (set greedy-boards) next-boards))
         explore?       (and (seq other-boards)
                             (< (rand) epsilon))
-        selected-board (if explore?
-                         (rand-nth other-boards)
-                         greedy-board)]
+        selected-board (rand-nth (if explore? other-boards greedy-boards))]
     {:board        selected-board
      :exploratory? explore?}))
