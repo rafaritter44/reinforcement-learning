@@ -1,6 +1,6 @@
 # Reinforcement Learning (RL)
 
-**Reference**: First chapter of [Reinforcement Learning: An Introduction](https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf).
+**Reference**: First chapter of [Reinforcement Learning: An Introduction (Richard Sutton, Andrew Barto)](https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf).
 
 **Most important features of RL**:
 1. Trial-and-error search;
